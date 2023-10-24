@@ -13,6 +13,7 @@ private:
     std::vector<double> color;
 
 public:
+    // Constructor
     Thread(std::string manufacturer, std::string name, int code, std::vector<double> color)
         : manufacturer(manufacturer), name(name), code(code), color(color) {}
 
@@ -20,22 +21,20 @@ public:
     {
         return manufacturer;
     }
-
     std::string getName() const
     {
         return name;
     }
-
     int getCode() const
     {
         return code;
     }
-
     std::vector<double> getColor() const
     {
         return color;
     }
 
+    // Function for calculating the difference between RGB colors
     double difference(const Thread &other)
     {
         double sumOfSquares = 0;
@@ -60,27 +59,28 @@ int main()
     clearConsole();
 
     std::cout << "PROBLEM 1: Thread Matching" << std::endl;
-
+    // Init vector of existing threads
     std::vector<Thread> machineThreads = initMachineThreads();
-   
+    // Required exact match preference
     bool exactMatch = matchPreference();
-   
+    // Collect user input for the design thread 
     Thread designThread = getUserInput();
-
+    // Match designThread to machineThread 
     int matchIndex = findMatchingThread(designThread, exactMatch, machineThreads);
-
+    // Display match result
     matchResult(matchIndex);
 
     return 0;
 }
-
+// Function for collecting user request for exact match
 bool matchPreference(){
     bool exactMatch = 0;
     std::cout<< "Exact match? (1 for true, 0 for false)";
     std::cin>> exactMatch;
     return exactMatch;
 }
-
+ 
+// Funtion to clear console screen before collecting user inputs
 void clearConsole(){
     // Clear console screen
     #ifdef _WIN32
@@ -90,6 +90,7 @@ void clearConsole(){
     #endif
 
 }
+// Function for response based on matchIndex
 void matchResult(int matchIndex){
   if (matchIndex != -1)
     {
@@ -101,6 +102,7 @@ void matchResult(int matchIndex){
     }
 }
 
+// Create an existing vector of threads on machine
 std::vector<Thread> initMachineThreads()
 {
     return {
@@ -109,9 +111,9 @@ std::vector<Thread> initMachineThreads()
         Thread("EmbroideryInc", "Sunlight", 900, {0.5, 0.5, 0.0})};
 }
 
+// Collect user input for values
 Thread getUserInput()
 {
-    // collect user input for values
     std::string manufacturer, name;
     int code;
     double red, green, blue;
@@ -125,6 +127,7 @@ Thread getUserInput()
     std::cout << "Code: ";
     std::cin >> code;
 
+    std:count<< "Enter RGB values";
     std::cout << "Red (0.0-1.0): ";
     std::cin >> red;
 
@@ -138,8 +141,6 @@ Thread getUserInput()
     
     return Thread (manufacturer, name, code, color);
 }
-
-// create a thread from user inputs
 
 int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads)
 {
