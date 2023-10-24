@@ -21,4 +21,4 @@ I used an AI tool (https://www.codeconvert.ai/java-to-c++-converter) to covert s
 This AI coversion missed a few key issues that I was able to solve by doing some quick reading on https://www.w3schools.com/cpp/default.asp.
 I'm working through getting my compiler and environment set up for testing the C++ on my machine. 
 The code for problem 2 and 1 seems to be operating as it does in Java using an online C++ compiler.
-
+Converting to C++ yeilded a number of other intersting learing opportunities. Two examples were needing to specify const in C++ when calling a funcion on object construction. Another was Java's implicit turnation with division, this was a particularly interesting issue in the rastercizing problem.

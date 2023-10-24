@@ -35,7 +35,7 @@ public:
     }
 
     // Function for calculating the difference between RGB colors
-    double difference(const Thread &other)
+    double difference(const Thread &other) const
     {
         double sumOfSquares = 0;
         for (int i = 0; i < 3; i++)
