@@ -41,34 +41,29 @@ public class RasterizeVector {
         } else {
             end = new Point(end.getX(), end.getY() - 1);
         }
-
+	
 		double x = start.getX();
 		double y = start.getY();
-
-		// change "d" in x or y
-		// use absolute value for x or y per Enhanced solution
+	
 		int dx = end.getX() - start.getX();
 		int dy = end.getY() - start.getY();
-
-		// finds the larger value between dx and dy so that steps is the maximum number
-		// of values to be traversed
-		// from start to end
-		int steps = Math.max(dx, dy);
-
-		// use ternary to set xIncrement and yIncrement to 0 if dx or dy is 0 : avoids
-		// dividing by zero
-		double xIncrement =  dx / steps;
-		double yIncrement =  dy / steps;
-
-		// Reversing the result of inputs
-
+	
+		int steps = Math.max(Math.abs(dx), Math.abs(dy));
+	
+		// Calculate slope , steps has to be cast to double because java will turncate and cause issue with zeros
+		double xIncrement = dx / (double) steps;
+		double yIncrement = dy / (double) steps;
+	
 		for (int i = 0; i <= steps; i++) {
 			points.add(new Point((int) Math.round(x), (int) Math.round(y)));
 			x += xIncrement;
 			y += yIncrement;
 		}
-
+	
 		return points;
 	}
-
+	
 }
+
+
+
