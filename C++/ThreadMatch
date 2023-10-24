@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cmath>
+#include <limits>
 
 class Thread {
 private:
@@ -12,19 +14,19 @@ public:
     Thread(std::string manufacturer, std::string name, int code, std::vector<double> color)
         : manufacturer(manufacturer), name(name), code(code), color(color) {}
 
-    std::string getManufacturer() {
+    std::string getManufacturer() const {
         return manufacturer;
     }
 
-    std::string getName() {
+    std::string getName() const {
         return name;
     }
 
-    int getCode() {
+    int getCode() const {
         return code;
     }
 
-    std::vector<double> getColor() {
+    std::vector<double> getColor() const {
         return color;
     }
 
