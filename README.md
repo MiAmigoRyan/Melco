@@ -5,8 +5,10 @@ Submitted by Ryan Arment for consideration of Junior Developer position.
 Java 8, Google, Stack Overflow, Spring Tool Suite, codeconvert.ai (for C++ conversion), www.W3schools.com (for C++ refactoring).
 
 ## TO DO:
-Refactoring Methods/Functions to reduce time complexity, currently all Methods/Functions are O(n).
-Transpose comments from Java solutions to C++ solutions.
+learn makefile!
+consider possible edge cases
+automate test cases
+improve and create UI
 
 ## Lessons learned Problem 1
 I had a little fun with this one by including a scanner so that I could 'test' a variety of imput cases. There is however, no check for invalid imputs.
