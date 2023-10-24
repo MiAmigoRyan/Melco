@@ -5,9 +5,9 @@ public class Thread {
 	private String manufacturer;
 	private String name;
 	private int code;
-	private double color;
+	private double[] color;
 
-	public Thread(String manufacturer, String name, int code, double color) {
+	public Thread(String manufacturer, String name, int code, double[] color) {
 		this.manufacturer = manufacturer;
 		this.name = name;
 		this.code = code;
@@ -15,8 +15,17 @@ public class Thread {
 	}
 
 	public double difference(Thread other) {
-		return Math.abs(color - other.color);
+	    double sumDifference = 0;
+	    // absolute differences for each RGB value
+	    for (int i = 0; i < 3; i++) {
+	        sumDifference += Math.abs(color[i] - other.color[i]);
+	    }    
+	    // Compute the average of the absolute differences
+	    double averageDifference = sumDifference / 3;
+	    
+	    return averageDifference;
 	}
+	
 
 	public String getManufacturer() {
 		return manufacturer;
@@ -42,11 +51,11 @@ public class Thread {
 		this.code = code;
 	}
 
-	public double getColor() {
+	public double[] getColor() {
 		return color;
 	}
 
-	public void setColor(double color) {
+	public void setColor(double[] color) {
 		this.color = color;
 	}
 
