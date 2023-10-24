@@ -4,52 +4,112 @@
 #include <cmath>
 #include <limits>
 
-class Thread {
+class Thread
+{
 private:
     std::string manufacturer;
     std::string name;
     int code;
     std::vector<double> color;
+
 public:
     Thread(std::string manufacturer, std::string name, int code, std::vector<double> color)
         : manufacturer(manufacturer), name(name), code(code), color(color) {}
 
-    std::string getManufacturer() const {
+    std::string getManufacturer() const
+    {
         return manufacturer;
     }
 
-    std::string getName() const {
+    std::string getName() const
+    {
         return name;
     }
 
-    int getCode() const {
+    int getCode() const
+    {
         return code;
     }
 
-    std::vector<double> getColor() const {
+    std::vector<double> getColor() const
+    {
         return color;
     }
 
-    double difference(const Thread& other) {
+    double difference(const Thread &other)
+    {
         double sumOfSquares = 0;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
+        {
             sumOfSquares += (color[i] - other.color[i]) * (color[i] - other.color[i]);
         }
         return std::sqrt(sumOfSquares);
     }
 };
 
-int main() {
-    // build an array of thread spools that exist on a machine
-    std::vector<Thread> machineThreads = {
+// F U N C T I O N   P R O T O T Y P E S
+std::vector<Thread> initMachineThreads();
+Thread getUserInput();
+int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads);
+
+int main()
+{
+    clearConsole();
+
+    std::cout << "PROBLEM 1: Thread Matching" << std::endl;
+
+    Thread designThread = getUserInput();
+
+    bool exactMatch = matchPreference();
+
+    std::vector<Thread> machineThreads = initMachineThreads();
+
+    int matchIndex = findMatchingThread(designThread, exactMatch, machineThreads);
+
+    matchResult(matchIndex);
+
+    return 0;
+}
+
+bool matchPreference(){
+    bool exactMatch = 0;
+    std::cout<< "Exact match? (1 for true, 0 for false)";
+    std::cin>> exactMatch;
+    return exactMatch;
+}
+
+void clearConsole{
+    // Clear console screen
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+
+}
+void matchResult(int matchIndex){
+  if (matchIndex != -1)
+    {
+        std::cout << "Match found at index: " << matchIndex << std::endl;
+    }
+    else
+    {
+        std::cerr << "No match available, check inputs" << std::endl;
+    }
+}
+
+std::vector<Thread> initMachineThreads()
+{
+    return {
         Thread("ThreadCo", "Fire Engine", 1234, {1.0, 0.0, 0.0}),
         Thread("ThreadCo", "Midnight", 5678, {0.0, 0.0, 1.0}),
-        Thread("EmbroideryInc", "Sunlight", 900, {0.5, 0.5, 0.0})
-    };
+        Thread("EmbroideryInc", "Sunlight", 900, {0.5, 0.5, 0.0})};
+}
+
+Thread getUserInput()
+{
 
     // collect user input for values
-    std::cout << "PROBLEM 1: Thread Matching" << std::endl;
-    
     std::string manufacturer, name;
     int code;
     double red, green, blue;
@@ -74,35 +134,30 @@ int main() {
 
     std::vector<double> color = {red, green, blue};
 
-    std::cout << "Exact match (1 for true, 0 for false): ";
-    bool exactMatch;
-    std::cin >> exactMatch;
+    return Thread(manufacturer, name, code, color);
+}
 
-    // create a thread from user inputs
-    Thread designThread(manufacturer, name, code, color);
+// create a thread from user inputs
+Thread designThread(manufacturer, name, code, color);
+
+int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads)
+{
 
     int matchIndex = -1;
     double minDifference = std::numeric_limits<double>::max();
 
-    for (size_t i = 0; i < machineThreads.size(); ++i) {
-        const Thread& machineThread = machineThreads[i];
-        bool isExactMatch = designThread.getManufacturer() == machineThread.getManufacturer()
-                            && designThread.getName() == machineThread.getName()
-                            && designThread.getCode() == machineThread.getCode();
+    for (size_t i = 0; i < machineThreads.size(); ++i)
+    {
+        const Thread &machineThread = machineThreads[i];
+        bool isExactMatch = designThread.getManufacturer() == machineThread.getManufacturer() && designThread.getName() == machineThread.getName() && designThread.getCode() == machineThread.getCode();
 
         double difference = designThread.difference(machineThread);
 
-        if ((exactMatch && isExactMatch) || (!exactMatch && difference < minDifference)) {
+        if ((exactMatch && isExactMatch) || (!exactMatch && difference < minDifference))
+        {
             matchIndex = i;
             minDifference = difference;
         }
     }
-
-    if (matchIndex != -1) {
-        std::cout << "Match found at index: " << matchIndex << std::endl;
-    } else {
-        std::cerr << "No match available, check inputs" << std::endl;
-    }
-
-    return 0;
+    return matchIndex;
 }
