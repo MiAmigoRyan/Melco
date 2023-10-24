@@ -19,33 +19,36 @@ public:
     }
 };
 
+
+
+
 std::vector<Point> rasterize(Point start, Point end) {
+    
     std::vector<Point> points;
+
+    int dx = end.getX() - start.getX();
+    int dy = end.getY() - start.getY();
+    
+    int steps = std::max(std::abs(dx), std::abs(dy));
+
+    if (steps == 0) {
+        points.push_back(start);
+        return points;
+    }
+
+    double xIncrement = dx / steps;
+    double yIncrement = dy / steps;
+
     double x = start.getX();
     double y = start.getY();
-    
-    int dx = std::abs(end.getX() - start.getX());
-    int dy = std::abs(end.getY() - start.getY());
-    
-    int steps = std::max(dx, dy);
-    
-    double xIncrement = dx == 0 ? 0 : (double) dx / steps;
-    double yIncrement = dy == 0 ? 0 : (double) dy / steps;
-    
-    if (start.getX() < end.getX()) {
-        for (int i = 0; i <= steps; i++) {
-            points.push_back(Point((int) std::round(x), (int) std::round(y)));
-            x += xIncrement;
-            y += yIncrement;
-        }
-    } else {
-        for (int i = 0; i <= steps; i++) {
-            points.push_back(Point((int) std::round(x), (int) std::round(y)));
-            x -= xIncrement;
-            y -= yIncrement;
-        }
+
+    for (int i=0; i<= steps; i++){
+        points.push_back(Point(std::round(x),std::round(y)));
+        x+= xIncrement;
+        y+= yIncrement;
     }
-    
+
+   
     return points;
 }
 
@@ -58,5 +61,17 @@ int main() {
         std::cout << point.getX() << "," << point.getY() << std::endl;
     }
     
+        // Second set of points
+    Point start2(4, 5);
+    Point end2(1, 2);
+    std::vector<Point> rasterizedPoints2 = rasterize(start2, end2);
+    
+    std::cout << "\nRasterized points for start (4,5) and end (1,2):" << std::endl;
+    for (Point point : rasterizedPoints2) {
+        std::cout << point.getX() << "," << point.getY() << std::endl;
+    }
+
     return 0;
 }
+    
+

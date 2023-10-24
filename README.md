@@ -13,7 +13,8 @@ I had a little fun with this one by including a scanner so that I could 'test' a
 I looked up some common methods for calculating the difference between RGB values and chose to us the average difference of the absolute values of each 'color[]'. There are a number of other methods for calculating distance between colors. Perhaps calculating distance after converting to RGB could better corrispond to the differences humans percive in color (https://en.wikipedia.org/wiki/Color_difference#CIELAB_%CE%94E*).
 
 ## Lessons learned Problem 2
-I especially enjoyed figuring out how to reverse the points in the enhanced portion of this problem. My 'basic' solution simply switched the start and end points, if end was less than start. I decided to use Slope to determine the points. I had to google and stack overflow to find a few examples of solutions for Rasterizing.
+I especially enjoyed figuring out how to reverse the points in the enhanced portion of this problem. My 'basic' solution simply switched the start and end points, if end was less than start. I decided to use Slope to determine the points. I had to google and stack overflow to find a few examples of solutions for Rasterizing. 
+After considering how I was handeling the posibility of dividing by zero I realized that I was incorrect in how I had first designed the algorhythim. I refactored to simpler and easier to read solution. 
 
 ## Lessons learned C++ translation
 I used an AI tool (https://www.codeconvert.ai/java-to-c++-converter) to covert snippets of my Java code to C++. 
