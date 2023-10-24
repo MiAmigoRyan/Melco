@@ -16,18 +16,18 @@ public class RasterizeVector {
 		}
 	}
 
-	/**
-	 * Rasterizes a vector between two points and returns a list of integer
-	 * coordinate points. start The starting point of the vector. end The ending
-	 * point of the vector.
-	 */
+	
+//	 Rasterizes a vector between two points and returns a list of integer
+//	 coordinate points. start The starting point of the vector. end The ending
+//	  point of the vector.
+	 
 	public static List<Point> rasterize(Point start, Point end) {
 		List<Point> points = new ArrayList<>();
 
 		double x = start.getX();
 		double y = start.getY();
 
-		// change in x or y
+		// change "d" in x or y
 		// use absolute value for x or y per Enhanced solution
 		int dx = Math.abs(end.getX() - start.getX());
 		int dy = Math.abs(end.getY() - start.getY());

@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// F O R  R E A D M E
-// my solution assumes that a user would always prefer an exact match or closest match, it does not give a user the option to choose.
-// implementation for this logic is included in the commented out 'F I R S T   S O L U T I O N'
-
 public class ThreadMatcher {
 
 	public static void main(String[] args) {
