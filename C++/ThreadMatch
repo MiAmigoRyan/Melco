@@ -50,6 +50,9 @@ public:
 // F U N C T I O N   P R O T O T Y P E S
 std::vector<Thread> initMachineThreads();
 Thread getUserInput();
+bool matchPreference();
+void clearConsole();
+void matchResult(int matchIndex);
 int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads);
 
 int main()
@@ -58,11 +61,11 @@ int main()
 
     std::cout << "PROBLEM 1: Thread Matching" << std::endl;
 
-    Thread designThread = getUserInput();
-
-    bool exactMatch = matchPreference();
-
     std::vector<Thread> machineThreads = initMachineThreads();
+   
+    bool exactMatch = matchPreference();
+   
+    Thread designThread = getUserInput();
 
     int matchIndex = findMatchingThread(designThread, exactMatch, machineThreads);
 
@@ -78,7 +81,7 @@ bool matchPreference(){
     return exactMatch;
 }
 
-void clearConsole{
+void clearConsole(){
     // Clear console screen
     #ifdef _WIN32
         system("cls");
@@ -133,12 +136,11 @@ Thread getUserInput()
     std::cin >> blue;
 
     std::vector<double> color = {red, green, blue};
-
-    return Thread(manufacturer, name, code, color);
+    
+    return Thread (manufacturer, name, code, color);
 }
 
 // create a thread from user inputs
-Thread designThread(manufacturer, name, code, color);
 
 int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads)
 {
