@@ -5,7 +5,7 @@ Submitted by Ryan Arment for consideration of Junior Developer position.
 Java 8, Google, Stack Overflow, VS Code, codeconvert.ai (for C++ conversion), www.W3schools.com (for C++ refactoring), www.phind.com (for explainations of Java and C++ differences)
 
 ## TO DO:
-# learn makefile!
+### learn makefile!
 # consider possible edge cases
 # automate test cases
 # improve and create UI
