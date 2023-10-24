@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+class Point {
+private:
+    int x;
+    int y;
+public:
+    Point(int x, int y) {
+        this->x = x;
+        this->y = y;
+    }
+    int getX() {
+        return x;
+    }
+    int getY() {
+        return y;
+    }
+};
+
+std::vector<Point> rasterize(Point start, Point end) {
+    std::vector<Point> points;
+    double x = start.getX();
+    double y = start.getY();
+    
+    int dx = std::abs(end.getX() - start.getX());
+    int dy = std::abs(end.getY() - start.getY());
+    
+    int steps = std::max(dx, dy);
+    
+    double xIncrement = dx == 0 ? 0 : (double) dx / steps;
+    double yIncrement = dy == 0 ? 0 : (double) dy / steps;
+    
+    if (start.getX() < end.getX()) {
+        for (int i = 0; i <= steps; i++) {
+            points.push_back(Point((int) std::round(x), (int) std::round(y)));
+            x += xIncrement;
+            y += yIncrement;
+        }
+    } else {
+        for (int i = 0; i <= steps; i++) {
+            points.push_back(Point((int) std::round(x), (int) std::round(y)));
+            x -= xIncrement;
+            y -= yIncrement;
+        }
+    }
+    
+    return points;
+}
+
+int main() {
+    Point start(1, 2);
+    Point end(4, 5);
+    std::vector<Point> rasterizedPoints = rasterize(start, end);
+    
+    for (Point point : rasterizedPoints) {
+        std::cout << point.getX() << "," << point.getY() << std::endl;
+    }
+    
+    return 0;
+}
