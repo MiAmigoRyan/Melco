@@ -54,16 +54,20 @@ public class ThreadMatcher {
 		// basic solution
 //	     System.out.print("Color: ");
 //	     double color = scanner.nextDouble();
+		
+	    // Ask user for matching preference
+	    System.out.print("Exact match (true/false): ");
+	    boolean exactMatch = scanner.nextBoolean();
 
 		// create a thread from user inputs
 		Thread designThread = new Thread(manufacturer, name, code, color);
 
-		int exactMatchIndex = exactMatch(designThread, machineThreads);
+		int matchIndex = findMatchingThread(designThread, exactMatch, machineThreads);
 
-		if (exactMatchIndex != -1) {
-			System.out.println("exact match found index: " + exactMatchIndex);
+		if (matchIndex != -1) {
+			System.out.println("exact match found index: " + matchIndex);
 		} else {
-			int closestMatchIndex = closestMatch(designThread, machineThreads);
+			int closestMatchIndex = findMatchingThread(designThread, exactMatch, machineThreads);
 			if (closestMatchIndex != -1) {
 				System.out.print("closest match found index: " + closestMatchIndex);
 			} else {
@@ -73,56 +77,26 @@ public class ThreadMatcher {
 
 	}
 
-	public static int exactMatch(Thread designThread, List<Thread> machineThreads) {
-		for (int i = 0; i < machineThreads.size(); i++) {
-			Thread machineThread = machineThreads.get(i);
-			if (designThread.getManufacturer().equals(machineThread.getManufacturer())
-					&& designThread.getName().equals(machineThread.getName())
-					&& designThread.getCode() == machineThread.getCode()) {
-				return i;
-			}
-		}
-		return -1;
+	public static int findMatchingThread(Thread designThread, boolean exactMatch, List<Thread> machineThreads) {
+	    int matchIndex = -1;
+	    double minDifference = Double.MAX_VALUE;
+
+	    for (int i = 0; i < machineThreads.size(); i++) {
+	        Thread machineThread = machineThreads.get(i);
+	        boolean isExactMatch = designThread.getManufacturer().equals(machineThread.getManufacturer())
+	                && designThread.getName().equals(machineThread.getName())
+	                && designThread.getCode() == machineThread.getCode();
+
+	        double difference = designThread.difference(machineThread);
+
+	        if ((exactMatch && isExactMatch) || (!exactMatch && difference < minDifference)) {
+	            matchIndex = i;
+	            minDifference = difference;
+	        }
+	    }
+
+	    return matchIndex;
 	}
-
-	public static int closestMatch(Thread designThread, List<Thread> machineThreads) {
-		int closestMatchIndex = -1;
-		double minDifference = Double.MAX_VALUE;
-
-		for (int i = 0; i < machineThreads.size(); i++) {
-			Thread machineThread = machineThreads.get(i);
-			double difference = designThread.difference(machineThread);
-			if (difference < minDifference) {
-				closestMatchIndex = i;
-				minDifference = difference;
-			}
-		}
-
-		return closestMatchIndex;
-	}
+	
 }
 
-//	F I R S T   S O L U T I O N 
-//  i chose to separate the exactMatch and closestMatch
-//	public static int matchingThread(Thread designThread, boolean useExactMatch, List<Thread> machineThreads) {
-//		
-//		int closestMatchIndex = -1;
-//		
-//		double minimumDifference = Double.MAX_VALUE;
-//		
-//		for(int i = 0; i < machineThreads.size(); i++) {
-//			
-//			Thread machineThread = machineThreads.get(i);
-//			
-//			if ((useExactMatch && designThread.getManufacturer().equals(machineThread.getManufacturer())
-//                    && designThread.getName().equals(machineThread.getName())
-//                    && designThread.getCode() == machineThread.getCode())
-//                    || (!useExactMatch && designThread.difference(machineThread) < minimumDifference))
-//				{
-//				closestMatchIndex = i;
-//				minimumDifference = designThread.difference(machineThread);
-//				}
-//					}
-//	
-//	return closestMatchIndex;
-//	}
