@@ -63,9 +63,9 @@ int main()
     std::vector<Thread> machineThreads = initMachineThreads();
     // Required exact match preference
     bool exactMatch = matchPreference();
-    // Collect user input for the design thread 
+    // Collect user input for the design thread
     Thread designThread = getUserInput();
-    // Match designThread to machineThread 
+    // Match designThread to machineThread
     int matchIndex = findMatchingThread(designThread, exactMatch, machineThreads);
     // Display match result
     matchResult(matchIndex);
@@ -73,26 +73,28 @@ int main()
     return 0;
 }
 // Function for collecting user request for exact match
-bool matchPreference(){
+bool matchPreference()
+{
     bool exactMatch = 0;
-    std::cout<< "Exact match? (1 for true, 0 for false)";
-    std::cin>> exactMatch;
+    std::cout << "Exact match? (1 for true, 0 for false)";
+    std::cin >> exactMatch;
     return exactMatch;
 }
- 
-// Funtion to clear console screen before collecting user inputs
-void clearConsole(){
-    // Clear console screen
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
 
+// Funtion to clear console screen before collecting user inputs
+void clearConsole()
+{
+// Clear console screen
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
 }
 // Function for response based on matchIndex
-void matchResult(int matchIndex){
-  if (matchIndex != -1)
+void matchResult(int matchIndex)
+{
+    if (matchIndex != -1)
     {
         std::cout << "Match found at index: " << matchIndex << std::endl;
     }
@@ -127,7 +129,7 @@ Thread getUserInput()
     std::cout << "Code: ";
     std::cin >> code;
 
-    std:count<< "Enter RGB values";
+    std::cout << "Enter RGB values";
     std::cout << "Red (0.0-1.0): ";
     std::cin >> red;
 
@@ -138,8 +140,8 @@ Thread getUserInput()
     std::cin >> blue;
 
     std::vector<double> color = {red, green, blue};
-    
-    return Thread (manufacturer, name, code, color);
+
+    return Thread(manufacturer, name, code, color);
 }
 
 int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads)
@@ -150,20 +152,20 @@ int findMatchingThread(const Thread &designThread, bool exactMatch, const std::v
     for (size_t i = 0; i < machineThreads.size(); ++i)
     {
         const Thread &machineThread = machineThreads[i];
-        bool isExactMatch = designThread.getManufacturer() == machineThread.getManufacturer() && 
-                            designThread.getName() == machineThread.getName() && 
+        bool isExactMatch = designThread.getManufacturer() == machineThread.getManufacturer() &&
+                            designThread.getName() == machineThread.getName() &&
                             designThread.getCode() == machineThread.getCode();
 
         double difference = designThread.difference(machineThread);
 
-        if (exactMatch && isExactMatch) 
+        if (exactMatch && isExactMatch)
         {
             matchIndex = i;
             break;
         }
         else if (!exactMatch && difference < minDifference)
-         matchIndex = i;
-            minDifference = difference;
+            matchIndex = i;
+        minDifference = difference;
     }
     return matchIndex;
 }
