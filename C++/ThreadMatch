@@ -111,7 +111,6 @@ std::vector<Thread> initMachineThreads()
 
 Thread getUserInput()
 {
-
     // collect user input for values
     std::string manufacturer, name;
     int code;
@@ -144,22 +143,26 @@ Thread getUserInput()
 
 int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads)
 {
-
     int matchIndex = -1;
     double minDifference = std::numeric_limits<double>::max();
 
     for (size_t i = 0; i < machineThreads.size(); ++i)
     {
         const Thread &machineThread = machineThreads[i];
-        bool isExactMatch = designThread.getManufacturer() == machineThread.getManufacturer() && designThread.getName() == machineThread.getName() && designThread.getCode() == machineThread.getCode();
+        bool isExactMatch = designThread.getManufacturer() == machineThread.getManufacturer() && 
+                            designThread.getName() == machineThread.getName() && 
+                            designThread.getCode() == machineThread.getCode();
 
         double difference = designThread.difference(machineThread);
 
-        if ((exactMatch && isExactMatch) || (!exactMatch && difference < minDifference))
+        if (exactMatch && isExactMatch) 
         {
             matchIndex = i;
-            minDifference = difference;
+            break;
         }
+        else if (!exactMatch && difference < minDifference)
+         matchIndex = i;
+            minDifference = difference;
     }
     return matchIndex;
 }
