@@ -2,32 +2,25 @@
 #include <vector>
 #include <cmath>
 
-class Point {
-private:
+struct Point {
     int x;
     int y;
 
-public:
-    // Constructor
-    Point(int x, int y) : x(x), y(y) {}
+    // Default constructor
+    Point() : x(0), y(0) {};
 
-    int getX() const {
-        return x;
-    }
-
-    int getY() const {
-        return y;
-    }
+    // Parameterized constructor
+    Point(int x, int y) : x(x), y(y) {};
 };
 
 // Bresenham's rasterize algo.
 std::vector<Point> rasterize(Point start, Point end) {
     std::vector<Point> points;
 
-    int x1 = start.getX();
-    int y1 = start.getY();
-    int x2 = end.getX();
-    int y2 = end.getY();
+    int x1 = start.x;
+    int y1 = start.y;
+    int x2 = end.x;
+    int y2 = end.y;
 
     // differences in x and y 
     int dx = std::abs(x2 - x1);
@@ -84,11 +77,11 @@ int main() {
 
         std::vector<Point> rasterizedPoints = rasterize(start, end);
         //print results
-        std::cout << "\nRasterized points for start (" << start.getX() << "," << start.getY()
-                  << ") and end (" << end.getX() << "," << end.getY() << "):" << std::endl;
+        std::cout << "\nRasterized points for start (" << start.x << "," << start.y
+                  << ") and end (" << end.x << "," << end.y << "):" << std::endl;
 
         for (const Point &point : rasterizedPoints) {
-            std::cout << point.getX() << "," << point.getY() << std::endl;
+            std::cout << point.x << "," << point.y << std::endl;
         }
     }
 
