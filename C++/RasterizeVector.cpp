@@ -63,8 +63,6 @@ std::vector<Point> rasterize(Point start, Point end) {
 }
 
 int main() {
-
-int main() {
     //create a vector to store test cases
     std::vector<std::pair<Point, Point>> testCases = {
         {Point(1, 2), Point(4, 5)},
@@ -110,6 +108,6 @@ int main() {
                 // }
 
                 // return 0;
-}
+
     
 
