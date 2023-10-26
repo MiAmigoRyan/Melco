@@ -46,8 +46,8 @@ std::vector<Point> rasterize(Point start, Point end) {
     }
 
     // Calculate the incrment(or decrment)between points- or slope
-    double xIncrement = dx / steps;
-    double yIncrement = dy / steps;
+    double xIncrement = static_cast<double>(dx) / steps;
+    double yIncrement = static_cast<double>(dy) / steps;
 
     // Rasterize and store in vector
     double x = start.getX();
