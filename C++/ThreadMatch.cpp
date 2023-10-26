@@ -4,47 +4,26 @@
 #include <cmath>
 #include <limits>
 
-class Thread
-{
-private:
+struct Thread {
     std::string manufacturer;
     std::string name;
     int code;
     std::vector<double> color;
 
-public:
     // Constructor
     Thread(std::string manufacturer, std::string name, int code, std::vector<double> color)
         : manufacturer(manufacturer), name(name), code(code), color(color) {}
 
-    std::string getManufacturer() const
-    {
-        return manufacturer;
-    }
-    std::string getName() const
-    {
-        return name;
-    }
-    int getCode() const
-    {
-        return code;
-    }
-    std::vector<double> getColor() const
-    {
-        return color;
-    }
-
     // Function for calculating the difference between RGB colors
-    double difference(const Thread &other) const
-    {
+    double difference(const Thread &other) const {
         double sumOfSquares = 0;
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             sumOfSquares += (color[i] - other.color[i]) * (color[i] - other.color[i]);
         }
         return std::sqrt(sumOfSquares);
     }
 };
+
 
 // F U N C T I O N   P R O T O T Y P E S
 std::vector<Thread> initMachineThreads();
@@ -55,8 +34,6 @@ int findMatchingThread(const Thread &designThread, bool exactMatch, const std::v
 
 int main()
 {
-    clearConsole();
-
     std::cout << "PROBLEM 1: Thread Matching" << std::endl;
     // Init vector of existing threads
     std::vector<Thread> machineThreads = initMachineThreads();
@@ -141,9 +118,9 @@ int findMatchingThread(const Thread &designThread, bool exactMatch, const std::v
     for (size_t i = 0; i < machineThreads.size(); ++i)
     {
         const Thread &machineThread = machineThreads[i];
-        bool isExactMatch = designThread.getManufacturer() == machineThread.getManufacturer() &&
-                            designThread.getName() == machineThread.getName() &&
-                            designThread.getCode() == machineThread.getCode();
+        bool isExactMatch = designThread.manufacturer == machineThread.manufacturer &&
+                            designThread.name == machineThread.name &&
+                            designThread.code == machineThread.code;
 
         double difference = designThread.difference(machineThread);
         // Refactored logic to only compute the difference if not exactMatch
@@ -163,15 +140,4 @@ int findMatchingThread(const Thread &designThread, bool exactMatch, const std::v
         }
     }
     return matchIndex;
-        // inital logic, this solution had redundant and sometimes unused computation
-            //     if (exactMatch && isExactMatch)
-            //     {
-            //         matchIndex = i;
-            //         break;
-            //     }
-            //     else if (!exactMatch && difference < minDifference)
-            //         matchIndex = i;
-            //     minDifference = difference;
-            // }
-            // return matchIndex;
 }
