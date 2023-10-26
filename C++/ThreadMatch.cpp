@@ -50,7 +50,7 @@ public:
 std::vector<Thread> initMachineThreads();
 Thread getUserInput();
 bool matchPreference();
-void clearConsole();
+//void clearConsole();
 void matchResult(int matchIndex);
 int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads);
 
@@ -82,15 +82,15 @@ bool matchPreference()
 }
 
 // Funtion to clear console screen before collecting user inputs
-void clearConsole()
-{
+// void clearConsole()
+// {
 // Clear console screen
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
-}
+// #ifdef _WIN32
+//     system("cls");
+// #else
+//     system("clear");
+// #endif
+// }
 // Function for response based on matchIndex
 void matchResult(int matchIndex)
 {
