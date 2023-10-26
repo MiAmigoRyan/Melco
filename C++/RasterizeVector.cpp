@@ -6,61 +6,68 @@ class Point {
 private:
     int x;
     int y;
+
 public:
-    //Constructor
-    Point(int x, int y) {
-        this->x = x;
-        this->y = y;
-    }
-    int getX() {
+    // Constructor
+    Point(int x, int y) : x(x), y(y) {}
+
+    int getX() const {
         return x;
     }
-    int getY() {
+
+    int getY() const {
         return y;
     }
 };
 
-//Functioin to rasterize a line between two points, this line is the thread that is laid between two needle punctures
+// Bresenham's rasterize algo.
 std::vector<Point> rasterize(Point start, Point end) {
-    
     std::vector<Point> points;
 
-    //Correction for outer corners
-    // If the end point is higher than the start point, decrement y corr of the start point.
-    //If the end point is lower, increment y corr of the end point. 
-    if (end.getY() < start.getY()) {
-        start = Point(start.getX(), start.getY() - 1);
-    } else {
-        end = Point(end.getX(), end.getY() - 1);
-    }
+    int x1 = start.getX();
+    int y1 = start.getY();
+    int x2 = end.getX();
+    int y2 = end.getY();
 
-    int dx = end.getX() - start.getX();
-    int dy = end.getY() - start.getY();
-    
-    int steps = std::max(std::abs(dx), std::abs(dy));
+    // differences in x and y 
+    int dx = std::abs(x2 - x1);
+    // Negate dy to handle negative slopes
+    int dy = -std::abs(y2 - y1);  
+    // x-axis step direction
+    int sx = x1 < x2 ? 1 : -1;    
+    // y-axis step direction
+    int sy = y1 < y2 ? 1 : -1;    
+    // Initial error value, e_xy 
+    int err = dx + dy;            
 
-    // Case of both points being the same or steps == 0
-    if (steps == 0) {
-        points.push_back(start);
-        return points;
-    }
+    // Loop until the start and end points are reached
+    while (true) {
+        // Add the current point to the list of rasterized points
+        points.push_back(Point(x1, y1));
 
-    // Calculate the incrment(or decrment)between points- or slope
-    double xIncrement = static_cast<double>(dx) / steps;
-    double yIncrement = static_cast<double>(dy) / steps;
-
-    // Rasterize and store in vector
-    double x = start.getX();
-    double y = start.getY();
-        for (int i=0; i<= steps; i++){
-            points.push_back(Point(std::round(x),std::round(y)));
-            x+= xIncrement;
-            y+= yIncrement;
+        // If current point is end point break
+        if (x1 == x2 && y1 == y2) {
+            break;
         }
 
-   
+        // Doubled error value
+        int e2 = 2 * err;
+
+        // Update corrd. and error if error is greater than or equal to change
+        if (e2 >= dy) {
+            err += dy;
+            x1 += sx;
+        }
+        if (e2 <= dx) {
+            err += dx;
+            y1 += sy;
+        }
+    }
+
     return points;
 }
+
+
 
 int main() {
     //create a vector to store test cases
@@ -88,26 +95,4 @@ int main() {
     return 0;
 }
 
-            // initial solution was limited to the 'hard coded' values in these two test cases    
-                // // First set of test points
-                // Point start(1, 2);
-                // Point end(4, 5);
-                // std::vector<Point> rasterizedPoints = rasterize(start, end);
-                // std::cout << "\nRasterized points for start (1,2) and end (4,5):" << std::endl;
-                // for (Point point : rasterizedPoints) {
-                //     std::cout << point.getX() << "," << point.getY() << std::endl;
-                // }
-                
-                // // Second set of test points
-                // Point start2(4, 5);
-                // Point end2(1, 2);
-                // std::vector<Point> rasterizedPoints2 = rasterize(start2, end2);
-                // std::cout << "\nRasterized points for start (4,5) and end (1,2):" << std::endl;
-                // for (Point point : rasterizedPoints2) {
-                //     std::cout << point.getX() << "," << point.getY() << std::endl;
-                // }
-
-                // return 0;
-
-    
-
+ 
