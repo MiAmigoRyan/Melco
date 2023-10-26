@@ -63,25 +63,53 @@ std::vector<Point> rasterize(Point start, Point end) {
 }
 
 int main() {
-    // First set of test points
-    Point start(1, 2);
-    Point end(4, 5);
-    std::vector<Point> rasterizedPoints = rasterize(start, end);
-    std::cout << "\nRasterized points for start (1,2) and end (4,5):" << std::endl;
-    for (Point point : rasterizedPoints) {
-        std::cout << point.getX() << "," << point.getY() << std::endl;
-    }
-    
-    // Second set of test points
-    Point start2(4, 5);
-    Point end2(1, 2);
-    std::vector<Point> rasterizedPoints2 = rasterize(start2, end2);
-    std::cout << "\nRasterized points for start (4,5) and end (1,2):" << std::endl;
-    for (Point point : rasterizedPoints2) {
-        std::cout << point.getX() << "," << point.getY() << std::endl;
+
+int main() {
+    //create a vector to store test cases
+    std::vector<std::pair<Point, Point>> testCases = {
+        {Point(1, 2), Point(4, 5)},
+        {Point(4, 5), Point(1, 2)},
+        // Add more test cases here as needed
+    };
+
+    // loop through testCases and implement rasterize()
+    for (size_t i = 0; i < testCases.size(); ++i) {
+        const Point &start = testCases[i].first;
+        const Point &end = testCases[i].second;
+
+        std::vector<Point> rasterizedPoints = rasterize(start, end);
+        //print results
+        std::cout << "\nRasterized points for start (" << start.getX() << "," << start.getY()
+                  << ") and end (" << end.getX() << "," << end.getY() << "):" << std::endl;
+
+        for (const Point &point : rasterizedPoints) {
+            std::cout << point.getX() << "," << point.getY() << std::endl;
+        }
     }
 
     return 0;
+}
+
+            // initial solution was limited to the 'hard coded' values in these two test cases    
+                // // First set of test points
+                // Point start(1, 2);
+                // Point end(4, 5);
+                // std::vector<Point> rasterizedPoints = rasterize(start, end);
+                // std::cout << "\nRasterized points for start (1,2) and end (4,5):" << std::endl;
+                // for (Point point : rasterizedPoints) {
+                //     std::cout << point.getX() << "," << point.getY() << std::endl;
+                // }
+                
+                // // Second set of test points
+                // Point start2(4, 5);
+                // Point end2(1, 2);
+                // std::vector<Point> rasterizedPoints2 = rasterize(start2, end2);
+                // std::cout << "\nRasterized points for start (4,5) and end (1,2):" << std::endl;
+                // for (Point point : rasterizedPoints2) {
+                //     std::cout << point.getX() << "," << point.getY() << std::endl;
+                // }
+
+                // return 0;
 }
     
 
