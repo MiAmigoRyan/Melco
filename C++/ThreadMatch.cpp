@@ -50,7 +50,6 @@ public:
 std::vector<Thread> initMachineThreads();
 Thread getUserInput();
 bool matchPreference();
-//void clearConsole();
 void matchResult(int matchIndex);
 int findMatchingThread(const Thread &designThread, bool exactMatch, const std::vector<Thread> &machineThreads);
 
@@ -81,16 +80,6 @@ bool matchPreference()
     return exactMatch;
 }
 
-// Funtion to clear console screen before collecting user inputs
-// void clearConsole()
-// {
-// Clear console screen
-// #ifdef _WIN32
-//     system("cls");
-// #else
-//     system("clear");
-// #endif
-// }
 // Function for response based on matchIndex
 void matchResult(int matchIndex)
 {
@@ -157,15 +146,32 @@ int findMatchingThread(const Thread &designThread, bool exactMatch, const std::v
                             designThread.getCode() == machineThread.getCode();
 
         double difference = designThread.difference(machineThread);
-
-        if (exactMatch && isExactMatch)
+        // Refactored logic to only compute the difference if not exactMatch
+         if (!exactMatch)
+        {
+            double difference = designThread.difference(machineThread);
+            if (difference < minDifference)
+            {
+                matchIndex = i;
+                minDifference = difference;
+            }
+        }
+        else if (isExactMatch)
         {
             matchIndex = i;
             break;
         }
-        else if (!exactMatch && difference < minDifference)
-            matchIndex = i;
-        minDifference = difference;
     }
     return matchIndex;
+        // inital logic, this solution had redundant and sometimes unused computation
+            //     if (exactMatch && isExactMatch)
+            //     {
+            //         matchIndex = i;
+            //         break;
+            //     }
+            //     else if (!exactMatch && difference < minDifference)
+            //         matchIndex = i;
+            //     minDifference = difference;
+            // }
+            // return matchIndex;
 }
